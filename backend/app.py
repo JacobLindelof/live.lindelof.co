@@ -13,7 +13,7 @@ users = json.loads(open('users.json', 'r').read())
 def page_not_found(error):
     return "Aborted with 404", 404
 
-@app.route('/api/on_publish/',  methods=['POST'])
+@app.route('/on_publish/',  methods=['POST'])
 def on_publish():
     # nginx-rtmp makes the stream name available in the POST body via `name`
     stream_key = request.form.get('name')
@@ -33,7 +33,7 @@ def on_publish():
     # Redirect the private stream key to the user's public stream
     return redirect('rtmp://127.0.0.1/hls-live/' + stream['username'])
 
-@app.route('/api/on_publish_done/',  methods=['POST'])
+@app.route('/on_publish_done/',  methods=['POST'])
 def on_publish_done():
     # nginx-rtmp makes the stream name available in the POST body via `name`
     stream_key = request.form.get('name')
