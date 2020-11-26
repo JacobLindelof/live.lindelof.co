@@ -69,8 +69,14 @@ class ChannelDetails(Resource):
     def get(self, username):
         for user in users.values():
             if user['username'] == username:
-                user.pop('stream_key', None)
-                return user
+                return {
+                    "username": user['username'],
+                    "is_live": True if user['live_at'] else False,
+                    "live_at": str(user['live_at']),
+                    "stream_title": user['stream_title'],
+                    "viewers": user['viewers']
+                }
+
 api.add_resource(ChannelList, '/api/channels/')
 api.add_resource(ChannelDetails, '/api/channels/<string:username>/')
 

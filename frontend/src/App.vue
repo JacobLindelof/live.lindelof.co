@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-right clipped-left>
-      <v-toolbar-title>Switch.TV</v-toolbar-title>
+      <v-toolbar-title>TayStone.TV</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer app clipped>
