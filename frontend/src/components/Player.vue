@@ -1,10 +1,12 @@
 <template>
-  <vue-plyr ref="plyr" :options="playerOptions">
-    <video
-      :id="'video-' + 1"
-      data-plyr-config="{'autoplay': true}"
-    ></video>
-  </vue-plyr>
+  <v-container class="pa-0" ref="videoContainer">
+    <vue-plyr ref="plyr" :options="playerOptions">
+      <video
+        :id="'video-' + 1"
+        data-plyr-config="{'autoplay': true}"
+      ></video>
+    </vue-plyr>
+  </v-container>
 </template>
 
 <script>
@@ -14,7 +16,7 @@ export default {
   name: "Player",
 
   props: {
-    channelName: {
+    channel: {
       type: String,
       required: true
     }
@@ -26,14 +28,10 @@ export default {
         controls: [
           "play-large",
           "play",
-          "progress",
-          "current-time",
           "mute",
           "volume",
-          "settings",
           "fullscreen"
         ],
-        settings: ["quality", "speed", "loop"]
       }
     };
   },
@@ -43,7 +41,7 @@ export default {
       return this.$refs.plyr.player;
     },
     channelUrl() {
-      return "https://live.lindelof.co/hls/" + this.channelName + "/index.m3u8"
+      return "https://live.lindelof.co/hls/" + this.channel + "/index.m3u8"
     }
   },
   mounted() {
@@ -57,3 +55,6 @@ export default {
   }
 };
 </script>
+
+<style>
+</style>

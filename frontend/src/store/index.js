@@ -10,6 +10,9 @@ export default new Vuex.Store({
   mutations: {
     updateChannels (state, payload) {
       state.channels = payload.channels
+    },
+    updateCurrentChannel (state, payload) {
+      state.currentChannel = payload.channel
     }
   },
   actions: {

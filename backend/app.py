@@ -52,7 +52,7 @@ def on_publish_done():
     # Redirect the private stream key to the user's public stream
     return "OK"
 
-class UserList(Resource):
+class ChannelList(Resource):
     def get(self):
         data = []
         for user in users.values():
@@ -60,10 +60,19 @@ class UserList(Resource):
                 "username": user['username'],
                 "is_live": True if user['live_at'] else False,
                 "live_at": str(user['live_at']),
+                "stream_title": user['stream_title'],
+                "viewers": user['viewers']
             })
         return data
 
-api.add_resource(UserList, '/api/users')
+class ChannelDetails(Resource):
+    def get(self, username):
+        for user in users.values():
+            if user['username'] == username:
+                user.pop('stream_key', None)
+                return user
+api.add_resource(ChannelList, '/api/channels/')
+api.add_resource(ChannelDetails, '/api/channels/<string:username>/')
 
 if __name__ == '__main__':
     app.run(debug=True)

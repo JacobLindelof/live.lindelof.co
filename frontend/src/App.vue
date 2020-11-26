@@ -9,10 +9,10 @@
     </v-navigation-drawer>
 
     <v-main>
-      <Player channelName="Unholypanda"/>
+      <router-view></router-view>
     </v-main>
 
-    <v-navigation-drawer app clipped right>
+    <v-navigation-drawer app clipped right width="20rem">
     </v-navigation-drawer>
   </v-app>
 </template>
@@ -20,14 +20,12 @@
 <script>
 import { mapActions } from 'vuex'
 import ChannelList from './components/ChannelList.vue'
-import Player from './components/Player.vue'
 
 export default {
   name: 'App',
 
   components: {
     ChannelList,
-    Player
   },
 
   methods: {
@@ -46,7 +44,7 @@ export default {
   },
 
   data: () => ({
-    timer: ''
+    timer: '',
   }),
 };
 </script>
