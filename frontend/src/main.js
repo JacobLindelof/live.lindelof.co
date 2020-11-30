@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify';
 import store from './store'
 
 import VueSocketIO from 'vue-socket.io'
+import io from 'socket.io-client'
 
 import VuePlyr from 'vue-plyr'
 import 'vue-plyr/dist/vue-plyr.css'
@@ -16,8 +17,7 @@ Vue.use(VuePlyr, {
 })
 
 Vue.use(new VueSocketIO({
-  debug: true,
-  connection: '/',
+  connection: io('/', {'transports': ['websocket']}),
 }))
 
 new Vue({

@@ -35,6 +35,12 @@ export default new Vuex.Store({
         channels: data
       })
     },
+    async setCurrentChannelInfo ({ commit }, channelInfo) {
+      commit('updateCurrentChannelInfo', {
+        channelInfo: channelInfo
+      })
+      commit('setCurrentChannel', channelInfo.username)
+    },
     async getCurrentChannelInfo ({ commit }, username) {
       const res = await fetch('/api/channels/' + username + '/');
       const data = await res.json();

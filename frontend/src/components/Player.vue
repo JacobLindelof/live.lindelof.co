@@ -1,13 +1,7 @@
 <template>
-  <v-container class="pa-0" ref="videoContainer">
-    <vue-plyr :poster="require('../assets/poster.png')" ref="plyr" :options="playerOptions">
-      <video
-        :id="'video-' + 1"
-        data-plyr-config="{'autoplay': true}"
-        height="1080px"
-      ></video>
-    </vue-plyr>
-  </v-container>
+  <vue-plyr ref="plyr" :options="playerOptions">
+    <video :id="'video-' + 1" data-plyr-config="{'autoplay': true}"></video>
+  </vue-plyr>
 </template>
 
 <script>
@@ -17,7 +11,7 @@ export default {
   name: "Player",
 
   props: {
-    channel: {
+    channelName: {
       type: String,
       required: true
     }
@@ -25,46 +19,48 @@ export default {
 
   data() {
     return {
+      streamIsLoaded: false,
       playerOptions: {
         controls: [
           "play-large",
           "play",
+          "progress",
+          "current-time",
           "mute",
           "volume",
+          "settings",
           "fullscreen"
         ],
+        settings: ["quality", "speed", "loop"]
       }
     };
   },
   computed: {
     player() {
+      console.log(this.$refs.plyr.player);
       return this.$refs.plyr.player;
     },
     channelUrl() {
-      return "https://live.lindelof.co/hls/" + this.channel + "/index.m3u8"
+      return "https://live.lindelof.co/hls/" + this.channelName + "/index.m3u8"
     }
   },
-  methods: {
-    loadStream() {
+  watch: {
+    channelName() {
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(this.channelUrl);
         hls.attachMedia(this.player.media);
-
-        window.hls = hls;
       }
     }
   },
   mounted() {
-    this.loadStream()
-  },
-  watch: {
-    channel: function() {
-      this.loadStream();
-    },
-  },
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(this.channelUrl);
+      hls.attachMedia(this.player.media);
+    }
+  }
 };
 </script>
-
 <style>
 </style>

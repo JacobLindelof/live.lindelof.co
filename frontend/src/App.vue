@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-right clipped-left>
-      <v-btn text to="/">
+      <v-btn text to="/" :ripple="false" class="px-0">
         <v-img
-          class="mx-2"
+          class="mr-2"
           :src="require('./assets/taystone.png')"
           max-height="40"
           max-width="40"
@@ -12,8 +12,6 @@
         ></v-img>
           TayStone.TV
       </v-btn>
-      <v-spacer/>
-      <v-text-field dense label='Username' v-model="myUsername"></v-text-field>
     </v-app-bar>
 
     <v-navigation-drawer app clipped>
@@ -24,7 +22,7 @@
       <router-view></router-view>
     </v-main>
 
-    <v-navigation-drawer app clipped right width="20rem" v-if="this.currentChannel">
+    <v-navigation-drawer app clipped right width="20rem" v-model="showChat">
       <Chat />
     </v-navigation-drawer>
   </v-app>
@@ -44,16 +42,14 @@ export default {
   },
 
   computed: {
-    myUsername: {
-      get() {
-        return this.$store.state.myUsername;
-      },
-      set(value) {
-        this.$store.commit("setUsername", value);
-      },
-    },
     currentChannel() {
       return this.$store.state.currentChannel
+    },
+    showChat() {
+      if (this.currentChannel != null && this.currentChannel != '') {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -74,3 +70,28 @@ export default {
   }),
 };
 </script>
+
+<style>
+.theme--dark.v-btn--active:hover::before, .theme--dark.v-btn--active::before {
+    opacity: 0 !important;
+}
+.theme--dark.v-list-item--active::before {
+    opacity: 0;
+}
+.theme--dark.v-list-item:hover::before{
+    opacity: .05;
+}
+.theme--dark.v-btn:hover::before, .theme--dark.v-btn::before {
+    opacity: 0 !important;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>

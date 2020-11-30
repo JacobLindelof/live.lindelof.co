@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <v-list-item v-for="channel in channels" :key="channel.username" :to="{ name: 'Channel', params: { username: channel.username }}">
+    <v-list-item v-for="channel in channels" :key="channel.username" :to="{ name: 'Channel', params: { username: channel.username }}" @click="setCurrentChannelInfo(channel)" :ripple="false">
       <v-list-item-avatar color="primary">{{ getChannelAbbreviation(channel.username) }}</v-list-item-avatar>
 
       <v-list-item-content>
@@ -35,7 +35,8 @@ export default {
       }
     },
     ...mapActions([
-      'setCurrentChannel'
+      'setCurrentChannel',
+      'setCurrentChannelInfo'
     ])
   },
   computed: {
