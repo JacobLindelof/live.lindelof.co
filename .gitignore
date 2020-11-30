@@ -5,7 +5,6 @@
 *.pyo
 env/
 env*
-dist/
 build/
 *.egg
 *.egg-info/
@@ -28,7 +27,6 @@ users.json
 
 .DS_Store
 node_modules
-/dist
 
 
 # local env files
