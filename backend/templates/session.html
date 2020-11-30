@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>Flask_Chat_App</title>
+  </head>
+  <body>
+
+    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+    <div class="message_holder"></div>
+
+    <form action="" method="POST">
+      <input type="text" class="username" placeholder="User Name"/>
+      <input type="text" class="message" placeholder="Messages"/>
+      <input type="submit"/>
+    </form>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on('error', (err) => console.log('error:', err));
+
+      socket.on('connect', function() {
+        socket.emit('join', {
+          room: 'TayStone'
+        } )
+
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let username = $( 'input.username' ).val()
+          let message = $( 'input.message' ).val()
+          let room = 'TayStone'
+          socket.emit('chatMessage', {
+            username : username,
+            message : message,
+            room: room
+          } )
+          $( 'input.message' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'newChatMessage', function( msg ) {
+        console.log( msg )
+        if( typeof msg.username !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.username+'</b> '+msg.message+'</div>' )
+        }
+      })
+    </script>
+
+  </body>
+  </html>

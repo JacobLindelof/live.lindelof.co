@@ -1,9 +1,10 @@
 <template>
   <v-container class="pa-0" ref="videoContainer">
-    <vue-plyr ref="plyr" :options="playerOptions">
+    <vue-plyr :poster="require('../assets/poster.png')" ref="plyr" :options="playerOptions">
       <video
         :id="'video-' + 1"
         data-plyr-config="{'autoplay': true}"
+        height="1080px"
       ></video>
     </vue-plyr>
   </v-container>
@@ -37,22 +38,31 @@ export default {
   },
   computed: {
     player() {
-      console.log(this.$refs.plyr.player);
       return this.$refs.plyr.player;
     },
     channelUrl() {
       return "https://live.lindelof.co/hls/" + this.channel + "/index.m3u8"
     }
   },
-  mounted() {
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(this.channelUrl);
-      hls.attachMedia(this.player.media);
+  methods: {
+    loadStream() {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(this.channelUrl);
+        hls.attachMedia(this.player.media);
 
-      window.hls = hls;
+        window.hls = hls;
+      }
     }
-  }
+  },
+  mounted() {
+    this.loadStream()
+  },
+  watch: {
+    channel: function() {
+      this.loadStream();
+    },
+  },
 };
 </script>
 

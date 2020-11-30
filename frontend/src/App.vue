@@ -1,7 +1,19 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-right clipped-left>
-      <v-toolbar-title>TayStone.TV</v-toolbar-title>
+      <v-img
+        class="mx-2"
+        :src="require('./assets/taystone.png')"
+        max-height="40"
+        max-width="40"
+        contain
+        
+      ></v-img>
+      <router-link to="/">
+        <v-toolbar-title>TayStone.TV</v-toolbar-title>
+      </router-link>
+      <v-spacer/>
+      <v-text-field dense label='Username' v-model="myUsername"></v-text-field>
     </v-app-bar>
 
     <v-navigation-drawer app clipped>
@@ -12,39 +24,53 @@
       <router-view></router-view>
     </v-main>
 
-    <v-navigation-drawer app clipped right width="20rem">
+    <v-navigation-drawer app clipped right width="20rem" v-if="this.currentChannel">
+      <Chat />
     </v-navigation-drawer>
   </v-app>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import ChannelList from './components/ChannelList.vue'
+import { mapActions } from "vuex";
+import ChannelList from "./components/ChannelList.vue";
+import Chat from "./views/Chat";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     ChannelList,
+    Chat,
   },
 
+  computed: {
+    myUsername: {
+      get() {
+        return this.$store.state.myUsername;
+      },
+      set(value) {
+        this.$store.commit("setUsername", value);
+      },
+    },
+    currentChannel() {
+      return this.$store.state.currentChannel
+    }
+  },
   methods: {
-    ...mapActions([
-      'getChannelsAndUpdate'
-    ])
+    ...mapActions(["getChannelsAndUpdate"]),
   },
 
-  created () {
+  created() {
     this.getChannelsAndUpdate();
-    this.timer = setInterval(this.getChannelsAndUpdate, 3000)
+    this.timer = setInterval(this.getChannelsAndUpdate, 3000);
   },
 
-  beforeDestroy () {
-    clearInterval(this.timer)
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 
   data: () => ({
-    timer: '',
+    timer: "",
   }),
 };
 </script>

@@ -12,6 +12,9 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  mounted() {
+    this.$store.commit('setCurrentChannel', null)
   }
 }
 </script>

@@ -5,8 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    myUsername: null,
     channels: [],
-    currentChannelInfo: null
+    currentChannel: null,
+    currentChannelInfo: {
+      username: null,
+      stream_title: null
+    }
   },
   mutations: {
     updateChannels (state, payload) {
@@ -14,6 +19,12 @@ export default new Vuex.Store({
     },
     updateCurrentChannelInfo (state, payload) {
       state.currentChannelInfo = payload.channelInfo
+    },
+    setUsername(state, payload) {
+      state.myUsername = payload
+    },
+    setCurrentChannel(state, payload) {
+      state.currentChannel = payload
     }
   },
   actions: {
@@ -30,6 +41,7 @@ export default new Vuex.Store({
       commit('updateCurrentChannelInfo', {
         channelInfo: data
       })
+      commit('setCurrentChannel', username)
     }
   },
   modules: {
