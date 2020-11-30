@@ -2,10 +2,9 @@
   <v-layout column fill-height>
     <v-list>
       <v-list-item v-for="(message, index) in messages" :key="index" dense>
-        <v-item-text
-          ><strong>{{ message.username }}:</strong>
-          {{ message.message }}</v-item-text
-        >
+        <v-list-item-content><strong>{{ message.username }}:</strong>
+          {{ message.message }}
+        </v-list-item-content>
       </v-list-item>
     </v-list>
     <form v-on:submit.prevent="sendMessage">

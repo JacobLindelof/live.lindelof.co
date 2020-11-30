@@ -1,17 +1,17 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-right clipped-left>
-      <v-img
-        class="mx-2"
-        :src="require('./assets/taystone.png')"
-        max-height="40"
-        max-width="40"
-        contain
-        
-      ></v-img>
-      <router-link to="/">
-        <v-toolbar-title>TayStone.TV</v-toolbar-title>
-      </router-link>
+      <v-btn text to="/">
+        <v-img
+          class="mx-2"
+          :src="require('./assets/taystone.png')"
+          max-height="40"
+          max-width="40"
+          contain
+          
+        ></v-img>
+          TayStone.TV
+      </v-btn>
       <v-spacer/>
       <v-text-field dense label='Username' v-model="myUsername"></v-text-field>
     </v-app-bar>

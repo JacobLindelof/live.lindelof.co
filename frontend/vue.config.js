@@ -9,8 +9,8 @@ module.exports = {
         target: 'https://live.lindelof.co/',
         changeOrigin: true
       },
-      '/socket.io': {
-        target: 'ws://127.0.0.1:5000',
+      '/socket.io/*': {
+        target: 'https://live.lindelof.co/',
         ws: true,
         changeOrigin: true
       },

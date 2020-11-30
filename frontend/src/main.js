@@ -17,7 +17,7 @@ Vue.use(VuePlyr, {
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'https://live.lindelof.co',
+  connection: '/',
 }))
 
 new Vue({
