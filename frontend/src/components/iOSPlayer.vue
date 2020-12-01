@@ -1,14 +1,10 @@
 <template>
-  <vue-plyr ref="plyr" :options="playerOptions">
-    <video :id="'video-' + 1" data-plyr-config="{'autoplay': true}"></video>
-  </vue-plyr>
+    <video ref="iOSVideoPlayer" :id="'video-' + 1" data-plyr-config="{'autoplay': true}"></video>
 </template>
 
 <script>
-import Hls from "hls.js";
-
 export default {
-  name: "Player",
+  name: "iOSPlayer",
 
   props: {
     channelName: {
@@ -20,19 +16,11 @@ export default {
   data() {
     return {
       streamIsLoaded: false,
-      playerOptions: {
-        controls: [
-          "play",
-          "mute",
-          "volume",
-          "fullscreen"
-        ],
-      }
     };
   },
   computed: {
     player() {
-      return this.$refs.plyr.player;
+      return this.$refs.iOSVideoPlayer;
     },
     channelUrl() {
       return "https://live.lindelof.co/hls/" + this.channelName + "/index.m3u8"
@@ -40,11 +28,7 @@ export default {
   },
   methods: {
     loadStream() {
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(this.channelUrl);
-        hls.attachMedia(this.player.media);
-      }
+      this.player.src = this.channelUrl
     }
   },
   watch: {

@@ -2,11 +2,12 @@
   <div>
     <div class="playerContainer">
       <div class="videoContainer">
-        <Player :channelName="username"/>
+        <Player v-if="!isMobileSafari" :channelName="username"/>
+        <iOSPlayer v-else :channelName="username"/>
       </div>
     </div>
     <v-list-item>
-      <v-list-item-avatar color="primary">{{ getChannelAbbreviation(channelInfo.username) }}</v-list-item-avatar>
+      <v-list-item-avatar width="50" height="50" color="primary">{{ getChannelAbbreviation(channelInfo.username) }}</v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ channelInfo.username }}</v-list-item-title>
         <v-list-item-subtitle>
@@ -20,6 +21,7 @@
 <script>
 import { mapActions } from "vuex";
 import Player from "../components/Player.vue";
+import iOSPlayer from "../components/iOSPlayer.vue";
 
 export default {
   name: "Channel",
@@ -30,7 +32,7 @@ export default {
     },
   },
   components: {
-    Player,
+    Player, iOSPlayer
   },
   methods: {
     getChannelAbbreviation(username) {
@@ -61,6 +63,14 @@ export default {
     channelInfo() {
       return this.$store.state.currentChannelInfo;
     },
+    isMobileSafari() {
+      var userAgent = window.navigator.userAgent;
+
+      if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) {
+        return true
+      }
+      return false
+    }
   },
 };
 </script>
