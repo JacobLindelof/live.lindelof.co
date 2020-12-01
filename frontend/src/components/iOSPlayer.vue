@@ -1,5 +1,12 @@
 <template>
-    <video ref="iOSVideoPlayer" :id="'video-' + 1" data-plyr-config="{'autoplay': true}"></video>
+  <video
+    ref="iOSVideoPlayer"
+    width="100%"
+    height="100%"
+    :id="'video-' + 1"
+    controls
+    playsinline
+  ></video>
 </template>
 
 <script>
@@ -9,8 +16,8 @@ export default {
   props: {
     channelName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
 
   data() {
@@ -23,23 +30,22 @@ export default {
       return this.$refs.iOSVideoPlayer;
     },
     channelUrl() {
-      return "https://live.lindelof.co/hls/" + this.channelName + "/index.m3u8"
-    }
+      return "https://live.lindelof.co/hls/" + this.channelName + "/index.m3u8";
+    },
   },
   methods: {
     loadStream() {
-      this.player.src = this.channelUrl
-    }
+      this.player.src = this.channelUrl;
+    },
   },
   watch: {
     channelName() {
       this.loadStream();
-    }
+    },
   },
   mounted() {
-    this.loadStream()
-  }
+    this.loadStream();
+  },
 };
 </script>
-<style>
-</style>
+<style></style>

@@ -37,17 +37,20 @@ export default {
   methods: {
     getChannelAbbreviation(username) {
       const abbrevationRegex = /([A-Z])/g
-      const caps = [...username.matchAll(abbrevationRegex)]
-      if (username.split(" ").length > 1) {
-        let nameArray = username.split(" ");
-        let abbrevation = nameArray[0][0] + nameArray[nameArray.length - 1][0];
-        return abbrevation;
-      } else if (caps.length === 2) {
-        return caps[0][0] + caps[1][0]
-      } else {
-        let abbrevation = username[0];
-        return abbrevation;
+      if(username) {
+        const caps = [...username.matchAll(abbrevationRegex)]
+        if (username.split(" ").length > 1) {
+          let nameArray = username.split(" ");
+          let abbrevation = nameArray[0][0] + nameArray[nameArray.length - 1][0];
+          return abbrevation;
+        } else if (caps.length === 2) {
+          return caps[0][0] + caps[1][0]
+        } else {
+          let abbrevation = username[0];
+          return abbrevation;
+        }
       }
+      return null
     },
     ...mapActions(["getCurrentChannelInfo"]),
   },

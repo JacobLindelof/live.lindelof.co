@@ -8,9 +8,8 @@
           max-height="40"
           max-width="40"
           contain
-          
         ></v-img>
-          TayStone.TV
+        TayStone.TV
       </v-btn>
     </v-app-bar>
 
@@ -43,14 +42,8 @@ export default {
 
   computed: {
     currentChannel() {
-      return this.$store.state.currentChannel
+      return this.$store.state.currentChannel;
     },
-    showChat() {
-      if (this.currentChannel != null && this.currentChannel != '') {
-        return true
-      }
-      return false
-    }
   },
   methods: {
     ...mapActions(["getChannelsAndUpdate"]),
@@ -65,24 +58,37 @@ export default {
     clearInterval(this.timer);
   },
 
+  watch: {
+    currentChannel() {
+      if (this.currentChannel) {
+        this.showChat = true;
+      } else {
+        this.showChat = false;
+      }
+    }
+  },
+
   data: () => ({
     timer: "",
+    showChat: false,
   }),
 };
 </script>
 
 <style>
-.theme--dark.v-btn--active:hover::before, .theme--dark.v-btn--active::before {
-    opacity: 0 !important;
+.theme--dark.v-btn--active:hover::before,
+.theme--dark.v-btn--active::before {
+  opacity: 0 !important;
 }
 .theme--dark.v-list-item--active::before {
-    opacity: 0;
+  opacity: 0;
 }
-.theme--dark.v-list-item:hover::before{
-    opacity: .05;
+.theme--dark.v-list-item:hover::before {
+  opacity: 0.05;
 }
-.theme--dark.v-btn:hover::before, .theme--dark.v-btn::before {
-    opacity: 0 !important;
+.theme--dark.v-btn:hover::before,
+.theme--dark.v-btn::before {
+  opacity: 0 !important;
 }
 
 body::-webkit-scrollbar {
@@ -91,7 +97,7 @@ body::-webkit-scrollbar {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
