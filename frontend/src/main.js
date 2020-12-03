@@ -1,28 +1,34 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import vuetify from './plugins/vuetify';
-import store from './store'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import vuetify from "./plugins/vuetify";
+import store from "./store";
 
-import VueSocketIO from 'vue-socket.io'
-import io from 'socket.io-client'
+import VueSocketIO from "vue-socket.io";
+import io from "socket.io-client";
 
-import VuePlyr from 'vue-plyr'
-import 'vue-plyr/dist/vue-plyr.css'
+import VuePlyr from "vue-plyr";
+import "vue-plyr/dist/vue-plyr.css";
 
-Vue.config.productionTip = false
+import axios from "axios";
+
+Vue.prototype.$http = axios;
+
+Vue.config.productionTip = false;
 
 Vue.use(VuePlyr, {
-  plyr: {}
-})
+  plyr: {},
+});
 
-Vue.use(new VueSocketIO({
-  connection: io('/', {'transports': ['websocket']}),
-}))
+Vue.use(
+  new VueSocketIO({
+    connection: io("/", { transports: ["websocket"] }),
+  })
+);
 
 new Vue({
   router,
   vuetify,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

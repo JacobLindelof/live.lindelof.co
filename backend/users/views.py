@@ -13,3 +13,12 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('username')
     serializer_class = UserSerializer
     lookup_field = 'slug'
+    permission_classes = [permissions.AllowAny]
+
+    def get_object(self):
+        slug = self.kwargs.get('slug')
+
+        if slug == "current" and self.request.user.is_authenticated:
+            return self.request.user
+
+        return super(UserViewSet, self).get_object()

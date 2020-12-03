@@ -11,6 +11,8 @@
         ></v-img>
         TayStone.TV
       </v-btn>
+      <v-spacer/>
+      <v-avatar color="primary" v-if="authUser">{{ getChannelAbbreviation(authUser.username) }}</v-avatar>
     </v-app-bar>
 
     <v-navigation-drawer app clipped>
@@ -44,13 +46,34 @@ export default {
     currentChannel() {
       return this.$store.state.currentChannel;
     },
+    authUser() {
+      return this.$store.state.authUser;
+    },
+    isAuthenticated() {
+      return this.$store.state.isAuthenticated;
+    },
   },
   methods: {
-    ...mapActions(["getChannelsAndUpdate"]),
+    ...mapActions(["getChannelsAndUpdate", "getUserInfo"]),
+    getChannelAbbreviation(username) {
+      const abbrevationRegex = /([A-Z])/g
+      const caps = [...username.matchAll(abbrevationRegex)]
+      if (username.split(" ").length > 1) {
+        let nameArray = username.split(" ");
+        let abbrevation = nameArray[0][0] + nameArray[nameArray.length - 1][0];
+        return abbrevation;
+      } else if (caps.length === 2) {
+        return caps[0][0] + caps[1][0]
+      } else {
+        let abbrevation = username[0];
+        return abbrevation;
+      }
+    },
   },
 
   created() {
     this.getChannelsAndUpdate();
+    this.getUserInfo();
     this.timer = setInterval(this.getChannelsAndUpdate, 3000);
   },
 

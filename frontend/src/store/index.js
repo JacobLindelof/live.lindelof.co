@@ -5,17 +5,46 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // Authentication Information
+    authUser: null,
+    isAuthenticated: false,
+    jwt: localStorage.getItem('token'),
+
     myUsername: null,
     channels: [],
     currentChannel: null,
     currentChannelInfo: {
       username: null,
       stream_title: null
+    },
+
+    endpoints: {
+      // TODO: Remove hardcoding of dev endpoints
+      obtainJWT: '/api/auth/obtain-token/',
+      refreshJWT: '/api/auth/refresh-token/',
+      baseUrl: '/api/'
     }
   },
   mutations: {
+    // Authentication Mutatiions
+    setAuthUser(state, { authUser, isAuthenticated }) {
+      Vue.set(state, 'authUser', authUser)
+      Vue.set(state, 'isAuthenticated', isAuthenticated)
+    },
+    updateToken(state, newToken) {
+      // TODO: For security purposes, take localStorage out of the project.
+      localStorage.setItem('token', newToken);
+      state.jwt = newToken;
+    },
+    removeToken(state) {
+      // TODO: For security purposes, take localStorage out of the project.
+      localStorage.removeItem('token');
+      state.jwt = null;
+    },
+
+
     updateChannels (state, payload) {
-      state.channels = payload.channels
+      state.channels = payload.channels.results
     },
     updateCurrentChannelInfo (state, payload) {
       state.currentChannelInfo = payload.channelInfo
@@ -28,6 +57,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async getUserInfo ({ commit }) {
+      commit('updateCurrentChannelInfo', {
+        channelInfo: channelInfo
+      })
+      commit('setCurrentChannel', channelInfo.username)
+    },
+
     async getChannelsAndUpdate ({ commit }) {
       const res = await fetch('/api/channels/');
       const data = await res.json();
