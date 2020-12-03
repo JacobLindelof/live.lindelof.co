@@ -1,6 +1,6 @@
 <template>
   <div class="chatMessage px-2 py-1">
-    <span class="username">{{message.username}}: </span><span class="message">{{message.message}}</span>
+    <span class="username" v-bind:style="{'color': usernameColor}">{{message.username}}: </span><span class="message">{{message.message}}</span>
   </div>
 </template>
 
@@ -11,6 +11,7 @@
     },
     props: [
       'message',
+      'usernameColor'
     ],
   }
 </script>

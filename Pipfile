@@ -14,11 +14,17 @@ flask-cors = "*"
 django = "*"
 django-environ = "*"
 psycopg2 = "*"
+<<<<<<< Updated upstream
 django-debug-toolbar = "*"
 django-extensions = "*"
 pillow = "*"
 django-rest-framework = "*"
 djangorestframework-camel-case = "*"
+=======
+whitenoise = "*"
+django-debug-toolbar = "*"
+django-extensions = "*"
+>>>>>>> Stashed changes
 
 [requires]
 python_version = "3.7"

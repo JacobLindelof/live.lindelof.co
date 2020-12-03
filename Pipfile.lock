@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< Updated upstream
             "sha256": "03abb40cbf83ad2a0733c42e06d9f1bf3b40a33c19e9cda0a9148afdc2457162"
+=======
+            "sha256": "465129d0e94ca07649874300fba876e2cb199e0b3d4023759e7afb63c21f555d"
+>>>>>>> Stashed changes
         },
         "pipfile-spec": 6,
         "requires": {
@@ -47,11 +51,19 @@
         },
         "django-debug-toolbar": {
             "hashes": [
+<<<<<<< Updated upstream
                 "sha256:84e2607d900dbd571df0a2acf380b47c088efb787dce9805aefeb407341961d2",
                 "sha256:9e5a25d0c965f7e686f6a8ba23613ca9ca30184daa26487706d4829f5cfb697a"
             ],
             "index": "pypi",
             "version": "==3.2"
+=======
+                "sha256:a1ce0665f7ef47d27b8df4b5d1058748e1f08500a01421a30d35164f38aaaf4c",
+                "sha256:c97921a9cd421d392e7860dc4b464db8e06c8628df4dc58fedab012888c293c6"
+            ],
+            "index": "pypi",
+            "version": "==3.1.1"
+>>>>>>> Stashed changes
         },
         "django-environ": {
             "hashes": [
@@ -69,6 +81,7 @@
             "index": "pypi",
             "version": "==3.1.0"
         },
+<<<<<<< Updated upstream
         "django-rest-framework": {
             "hashes": [
                 "sha256:47a8f496fa69e3b6bd79f68dd7a1527d907d6b77f009e9db7cf9bb21cc565e4a"
@@ -89,6 +102,8 @@
             "index": "pypi",
             "version": "==1.2.0"
         },
+=======
+>>>>>>> Stashed changes
         "dnspython": {
             "hashes": [
                 "sha256:36c5e8e38d4369a08b6780b7f27d790a292b2b08eea01607865bf0936c558e01",
@@ -211,6 +226,7 @@
             ],
             "version": "==1.1.1"
         },
+<<<<<<< Updated upstream
         "pillow": {
             "hashes": [
                 "sha256:006de60d7580d81f4a1a7e9f0173dc90a932e3905cc4d47ea909bc946302311a",
@@ -245,6 +261,8 @@
             "index": "pypi",
             "version": "==8.0.1"
         },
+=======
+>>>>>>> Stashed changes
         "psycopg2": {
             "hashes": [
                 "sha256:00195b5f6832dbf2876b8bf77f12bdce648224c89c880719c745b90515233301",
@@ -307,6 +325,14 @@
                 "sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c"
             ],
             "version": "==1.0.1"
+        },
+        "whitenoise": {
+            "hashes": [
+                "sha256:05ce0be39ad85740a78750c86a93485c40f08ad8c62a6006de0233765996e5c7",
+                "sha256:05d00198c777028d72d8b0bbd234db605ef6d60e9410125124002518a48e515d"
+            ],
+            "index": "pypi",
+            "version": "==5.2.0"
         }
     },
     "develop": {}

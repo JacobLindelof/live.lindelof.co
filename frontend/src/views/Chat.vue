@@ -1,53 +1,65 @@
 <template>
   <v-layout justify-space-between column fill-height>
-    <v-dialog v-model="usernameDialog" max-width="400">
-      <v-card>
-        <v-form v-on:submit.prevent="setUsername">
-          <v-card-title class="headline">
-            Username Required
-          </v-card-title>
-          <v-card-text>
-            Please set a username to use the stream chat.
-            <v-text-field
-              required
-              v-model="usernameDialogUsername"
-              placeholder="Username"
-              hide-details
-            ></v-text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="red darken-1" text @click="usernameDialog = false">
-              Cancel
-            </v-btn>
-            <v-btn color="darken-1" submit text @click="setUsername" :disabled="usernameDialogUsername == null || usernameDialogUsername == ''">
-              OK
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-    <div ref="messageContainer" class="messageContainer">
-      <Message
-        v-for="(message, index) in messages"
-        v-bind:class="{ alt: index % 2 === 0 }"
-        :key="index"
-        :message="message"
-      />
-    </div>
-    <v-container justify-end class="sendContainer elevation-10">
-      <form v-on:submit.prevent="sendMessage">
-        <v-text-field
-          solo
-          exact
-          icon
-          v-model="chatMessage"
-          placeholder="Send a message"
-          hide-details
-          @click="checkUsername"
-        ></v-text-field>
-      </form>
-    </v-container>
+    <v-card class="chatHeading">
+      <v-card-title class="justify-center">Stream Chat</v-card-title>
+    </v-card>
+    <v-layout justify-space-between column fill-height>
+      <v-dialog v-model="usernameDialog" max-width="400">
+        <v-card>
+          <v-form v-on:submit.prevent="setUsername">
+            <v-card-title class="headline">
+              Username Required
+            </v-card-title>
+            <v-card-text>
+              Please set a username to use the stream chat.
+              <v-text-field
+                required
+                v-model="usernameDialogUsername"
+                placeholder="Username"
+                hide-details
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" text @click="usernameDialog = false">
+                Cancel
+              </v-btn>
+              <v-btn color="darken-1" submit text @click="setUsername" :disabled="usernameDialogUsername == null || usernameDialogUsername == ''">
+                OK
+              </v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-dialog>
+      <v-layout justify-space-between column fill-height class="messageLayout">
+        <div></div>
+        <v-container justify-end ref="messageContainer" class="messageContainer pa-0">
+          <div class="chatMessage px-2 py-1 alt">
+            <span>Welcome to TayStone.TV say hi!</span>
+          </div>
+          <Message
+            v-for="(message, index) in messages"
+            v-bind:class="{ alt: index % 2 === 1 }"
+            :key="index"
+            :message="message"
+            :usernameColor="usernameColor"
+          />
+        </v-container>
+      </v-layout>
+      <v-container justify-end class="sendContainer elevation-10">
+        <form v-on:submit.prevent="sendMessage">
+          <v-text-field
+            solo
+            exact
+            icon
+            v-model="chatMessage"
+            placeholder="Send a message"
+            hide-details
+            @click="checkUsername"
+          ></v-text-field>
+        </form>
+      </v-container>
+    </v-layout>
   </v-layout>
 </template>
 
@@ -62,6 +74,7 @@ export default {
     chatMessage: null,
     messages: [],
     currentChatChannel: null,
+    usernameColor: `hsla(${~~(360 * Math.random())},70%,70%,0.8)`
   }),
   computed: {
     currentChannel() {
@@ -148,6 +161,9 @@ export default {
 </script>
 
 <style>
+.messageLayout { 
+  background: rgba(0,0,0,.1);
+}
 .messageContainer {
   overflow-y: scroll;
   word-break: break-all;
@@ -160,5 +176,12 @@ export default {
 }
 .alt {
   background: rgba(0,0,0,.1);
+}
+.sendContainer {
+  height: 72px;
+  background-color: #282828;
+}
+.chatHeading {
+  background-color: #282828;
 }
 </style>
