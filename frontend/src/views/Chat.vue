@@ -84,10 +84,12 @@ export default {
           room: this.currentChatChannel,
         });
       }
-      this.currentChatChannel = this.currentChannel.username;
-      this.$socket.emit("join", {
-        room: this.currentChatChannel,
-      });
+      if (this.currentChatChannel != this.currentChannel.username) {
+        this.currentChatChannel = this.currentChannel.username;
+        this.$socket.emit("join", {
+          room: this.currentChatChannel,
+        });
+      }
     },
     setUsername() {
       if(this.usernameDialogUsername != null && this.usernameDialogUsername != "") {
