@@ -78,13 +78,13 @@ export default {
   },
   methods: {
     reloadChat() {
-      this.messages = [];
-      if (this.currentChatChannel != null) {
-        this.$socket.emit("leave", {
-          room: this.currentChatChannel,
-        });
-      }
       if (this.currentChatChannel != this.currentChannel.username) {
+        if (this.currentChatChannel != null) {
+          this.$socket.emit("leave", {
+            room: this.currentChatChannel,
+          });
+        }
+        this.messages = [];
         this.currentChatChannel = this.currentChannel.username;
         this.$socket.emit("join", {
           room: this.currentChatChannel,
