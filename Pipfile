@@ -16,6 +16,9 @@ django-environ = "*"
 psycopg2 = "*"
 django-debug-toolbar = "*"
 django-extensions = "*"
+pillow = "*"
+django-rest-framework = "*"
+djangorestframework-camel-case = "*"
 
 [requires]
 python_version = "3.7"

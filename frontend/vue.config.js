@@ -6,7 +6,7 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '^/api': {
-        target: 'https://live.lindelof.co/',
+        target: 'http://127.0.0.1:8000/',
         changeOrigin: true
       },
       '/socket.io/*': {

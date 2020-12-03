@@ -5,7 +5,7 @@
 
       <v-list-item-content>
         <v-list-item-title>{{ channel.username }}</v-list-item-title>
-        <v-list-item-subtitle v-if="channel.is_live"
+        <v-list-item-subtitle v-if="channel.isLive"
           >🔴 Live</v-list-item-subtitle
         >
         <v-list-item-subtitle v-else>Offline</v-list-item-subtitle>

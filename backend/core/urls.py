@@ -5,8 +5,20 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from rest_framework import routers
+
+from core import views as core_views
+from users import views as user_views
+
+router = routers.DefaultRouter()
+router.register(r'channels', user_views.UserViewSet)
+
 urlpatterns = [
+    path('on-publish/', core_views.on_publish),
+    path('on-publish-done/', core_views.on_publish_done),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

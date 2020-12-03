@@ -11,7 +11,7 @@
       <v-list-item-content>
         <v-list-item-title>{{ channelInfo.username }}</v-list-item-title>
         <v-list-item-subtitle>
-          {{ channelInfo.stream_title }}
+          {{ channelInfo.streamTitle }}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -34,6 +34,11 @@ export default {
   components: {
     Player, iOSPlayer
   },
+  data: function() {
+    return {
+      timer: null,
+    }
+  },
   methods: {
     getChannelAbbreviation(username) {
       const abbrevationRegex = /([A-Z])/g
@@ -55,7 +60,8 @@ export default {
     ...mapActions(["getCurrentChannelInfo"]),
   },
   mounted() {
-    this.getCurrentChannelInfo(this.username);
+    this.getCurrentChannelInfo(this.username)
+    this.timer = setInterval(() => {this.getCurrentChannelInfo(this.username)}, 5000);
   },
   watch: {
     username() {
