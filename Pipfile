@@ -11,6 +11,11 @@ flask-restful = "*"
 flask-socketio = "*"
 eventlet = "*"
 flask-cors = "*"
+django = "*"
+django-environ = "*"
+psycopg2 = "*"
+django-debug-toolbar = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"
