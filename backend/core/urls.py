@@ -19,7 +19,8 @@ urlpatterns = [
     path('on-publish-done/', core_views.on_publish_done),
     path('admin/', admin.site.urls),
     path('api/auth/obtain-token/', obtain_jwt_token),
-    path('api/auth/refresh-token/', refresh_jwt_token),    
+    path('api/auth/refresh-token/', refresh_jwt_token),
+    path('api/auth/register/', user_views.register_user),    
     path('api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

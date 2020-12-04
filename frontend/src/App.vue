@@ -11,8 +11,10 @@
         ></v-img>
         TayStone.TV
       </v-btn>
-      <v-spacer/>
-      <v-avatar color="primary" v-if="authUser">{{ getChannelAbbreviation(authUser.username) }}</v-avatar>
+      <v-spacer />
+      <LoginButton v-if="isAuthenticated === false"/>
+      <SignupButton v-if="isAuthenticated === false"/>
+      <UserDialog v-if="isAuthenticated === true"/>
     </v-app-bar>
 
     <v-navigation-drawer app clipped>
@@ -32,12 +34,18 @@
 <script>
 import { mapActions } from "vuex";
 import ChannelList from "./components/ChannelList.vue";
+import LoginButton from '@/components/LoginButton.vue'
+import SignupButton from '@/components/SignupButton.vue'
+import UserDialog from '@/components/UserDialog.vue'
 import Chat from "./views/Chat";
 
 export default {
   name: "App",
 
   components: {
+    SignupButton,
+    LoginButton,
+    UserDialog,
     ChannelList,
     Chat,
   },
@@ -55,20 +63,6 @@ export default {
   },
   methods: {
     ...mapActions(["getChannelsAndUpdate", "getUserInfo"]),
-    getChannelAbbreviation(username) {
-      const abbrevationRegex = /([A-Z])/g
-      const caps = [...username.matchAll(abbrevationRegex)]
-      if (username.split(" ").length > 1) {
-        let nameArray = username.split(" ");
-        let abbrevation = nameArray[0][0] + nameArray[nameArray.length - 1][0];
-        return abbrevation;
-      } else if (caps.length === 2) {
-        return caps[0][0] + caps[1][0]
-      } else {
-        let abbrevation = username[0];
-        return abbrevation;
-      }
-    },
   },
 
   created() {
@@ -88,7 +82,7 @@ export default {
       } else {
         this.showChat = false;
       }
-    }
+    },
   },
 
   data: () => ({

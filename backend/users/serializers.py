@@ -4,6 +4,13 @@ from rest_framework import serializers
 
 from users.models import User
 
+
+class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User

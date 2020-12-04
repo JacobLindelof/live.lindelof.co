@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import axios from 'axios'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     // Authentication Information
     authUser: null,
-    isAuthenticated: false,
+    isAuthenticated: null,
     jwt: localStorage.getItem('token'),
 
     myUsername: null,
@@ -57,11 +59,45 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getUserInfo ({ commit }) {
-      commit('updateCurrentChannelInfo', {
-        channelInfo: channelInfo
-      })
-      commit('setCurrentChannel', channelInfo.username)
+    async getUserInfo ({ commit, state }) {
+      const jwt = state.jwt;
+      if (jwt) {
+        const base = {
+          baseURL: state.endpoints.baseUrl,
+          headers: {
+          // Set your Authorization to 'JWT', not Bearer!!!
+            Authorization: `JWT ${state.jwt}`,
+            'Content-Type': 'application/json'
+          },
+          xhrFields: {
+              withCredentials: true
+          }
+        }
+        // Even though the authentication returned a user object that can be
+        // decoded, we fetch it again. This way we aren't super dependant on
+        // JWT and can plug in something else.
+        const axiosInstance = axios.create(base)
+        axiosInstance({
+          url: "/channels/current/",
+          method: "get",
+          params: {}
+        })
+        .then((response) => {
+          commit("setAuthUser",
+            {authUser: response.data, isAuthenticated: true}
+          )
+        })
+        .catch(() => {
+          commit("setAuthUser",
+            {authUser: null, isAuthenticated: false}
+          )
+          commit("removeToken")
+        })
+      } else {
+        commit("setAuthUser",
+          {authUser: null, isAuthenticated: false}
+        )
+      }
     },
 
     async getChannelsAndUpdate ({ commit }) {

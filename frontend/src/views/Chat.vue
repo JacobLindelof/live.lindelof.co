@@ -56,6 +56,7 @@
             placeholder="Send a message"
             hide-details
             @click="checkUsername"
+            :disabled="!isAuthenticated"
           ></v-text-field>
         </form>
       </v-container>
@@ -77,16 +78,14 @@ export default {
     usernameColor: `hsla(${~~(360 * Math.random())},70%,70%,0.8)`
   }),
   computed: {
+    isAuthenticated() {
+      return this.$store.state.isAuthenticated;
+    },
     currentChannel() {
       return this.$store.state.currentChannelInfo;
     },
-    myUsername: {
-      get() {
-        return this.$store.state.myUsername;
-      },
-      set(value) {
-        this.$store.commit("setUsername", value);
-      },
+    myUsername() {
+      return this.$store.state.authUser.username;
     },
   },
   methods: {
@@ -127,7 +126,7 @@ export default {
       if (this.chatMessage != null && this.chatMessage != "") {
         if (this.myUsername != null && this.myUsername != "") {
           this.$socket.emit("chatMessage", {
-            username: this.$store.state.myUsername,
+            username: this.myUsername,
             message: this.chatMessage,
             room: this.currentChatChannel,
           });
