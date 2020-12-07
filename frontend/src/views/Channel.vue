@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="channelInfo.username">
     <div class="playerContainer">
       <div class="videoContainer">
         <Player v-if="!isMobileSafari" :channelName="username"/>
@@ -16,6 +16,16 @@
       </v-list-item-content>
     </v-list-item>
   </div>
+  <v-container v-else fill-height>
+    <div style="width: 100%;">
+      <v-row align="center" justify="center">
+        <v-icon color="secondary" size="150">mdi-magnify</v-icon>
+      </v-row>
+      <v-row align="center" justify="center">
+        <div class="text-h3 secondary--text">404 CHANNEL NOT FOUND</div>
+      </v-row>
+    </div>
+  </v-container>
 </template>
 
 <script>

@@ -42,7 +42,7 @@
             v-bind:class="{ alt: index % 2 === 1 }"
             :key="index"
             :message="message"
-            :usernameColor="usernameColor"
+            :usernameColor="message.usernameColor"
           />
         </v-container>
       </v-layout>
@@ -128,6 +128,7 @@ export default {
           this.$socket.emit("chatMessage", {
             username: this.myUsername,
             message: this.chatMessage,
+            usernameColor: this.usernameColor,
             room: this.currentChatChannel,
           });
           this.chatMessage = null;

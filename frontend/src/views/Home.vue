@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home" fill-height>
+  <v-container class="home" fill-height fill-width>
   </v-container>
 </template>
 
@@ -14,7 +14,5 @@ export default {
 </script>
 
 <style>
-  .home {
-    background-color: black;
-  } 
+
 </style>

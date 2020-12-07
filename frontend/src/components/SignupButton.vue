@@ -11,9 +11,9 @@
           Sign Up
         </v-card-title>
         <v-card-text> 
-          <v-text-field label="Username" v-model="username"></v-text-field>
-          <v-text-field label="Email" v-model="email"></v-text-field>
-          <v-text-field label="Passowrd" type="password" v-model="password"></v-text-field>
+          <v-text-field label="Username" v-model="username" :errorMessages="errors.username"></v-text-field>
+          <v-text-field label="Email" v-model="email" :errorMessages="errors.email"></v-text-field>
+          <v-text-field label="Password" type="password" v-model="password" :errorMessages="errors.password"></v-text-field>
           <v-text-field label="Confirm Password" type="password" v-model="password_confirm"></v-text-field>
         </v-card-text>
         <v-card-actions>
@@ -40,6 +40,11 @@ export default {
       password: '',
       password_confirm: '',
       dialog: null,
+      errors: {
+        email: [],
+        password: [],
+        username: []
+      }
     }
   },
   methods: {
@@ -81,9 +86,7 @@ export default {
             })
       })
       .catch((error) => {
-        console.log(error);
-        console.debug(error);
-        console.dir(error);
+        this.errors = error.response.data;
       })
     }
   }

@@ -54,6 +54,9 @@ export default {
     currentChannel() {
       return this.$store.state.currentChannel;
     },
+    currentChannelInfo() {
+      return this.$store.state.currentChannelInfo;
+    },
     authUser() {
       return this.$store.state.authUser;
     },
@@ -77,7 +80,7 @@ export default {
 
   watch: {
     currentChannel() {
-      if (this.currentChannel) {
+      if (this.currentChannelInfo.username) {
         this.showChat = true;
       } else {
         this.showChat = false;
