@@ -17,7 +17,10 @@ from users.models import User
 def register_user(request):
     serialized = UserRegistrationSerializer(data=request.data, context={'request': request})
     if serialized.is_valid():
-        print(serialized.data)
+        username = serialized.data['username']
+        if User.objects.filter(username__iexact=username).exists():
+            serialized._errors['username'] = ["A user with that username already exists."]
+            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.create_user(
             username=serialized.data['username'],
             email=serialized.data['email'],
@@ -32,6 +35,9 @@ def register_user(request):
         token = jwt_encode_handler(payload)
         return Response({"token": token}, status=status.HTTP_201_CREATED)
     else:
+        username = serialized.data['username']
+        if User.objects.filter(username__iexact=username).exists() and not User.objects.filter(username=username).exists():
+            serialized._errors['username'] = ["A user with that username already exists."]
         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
