@@ -37,7 +37,7 @@ import ChannelList from "./components/ChannelList.vue";
 import LoginButton from '@/components/LoginButton.vue'
 import SignupButton from '@/components/SignupButton.vue'
 import UserDialog from '@/components/UserDialog.vue'
-import Chat from "./views/Chat";
+import Chat from '@/components/Chat.vue'
 
 export default {
   name: "App",

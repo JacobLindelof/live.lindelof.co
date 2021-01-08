@@ -45,6 +45,9 @@ export default new Vuex.Store({
     },
 
 
+    updateChatColor (state, payload) {
+      state.authUser.chatColor = payload.chatColor
+    },
     updateChannels (state, payload) {
       state.channels = payload.channels.results
     },
@@ -112,6 +115,11 @@ export default new Vuex.Store({
         channelInfo: channelInfo
       })
       commit('setCurrentChannel', channelInfo.username)
+    },
+    async setChatColor ({ commit }, payload) {
+      commit('updateChatColor', {
+        chatColor: payload.chatColor
+      })
     },
     async getCurrentChannelInfo ({ commit }, username) {
       const slug = username.toLowerCase();

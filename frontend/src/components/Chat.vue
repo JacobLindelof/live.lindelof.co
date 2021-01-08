@@ -42,7 +42,7 @@
             v-bind:class="{ alt: index % 2 === 1 }"
             :key="index"
             :message="message"
-            :usernameColor="message.usernameColor"
+            :usernameColor="currentUser.chatColor"
           />
         </v-container>
       </v-layout>
@@ -86,6 +86,9 @@ export default {
     },
     myUsername() {
       return this.$store.state.authUser.username;
+    },
+    currentUser() {
+      return this.$store.state.authUser;
     },
   },
   methods: {
