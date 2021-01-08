@@ -8,7 +8,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_jwt.settings import api_settings
-from users.serializers import UserSerializer, UserRegistrationSerializer
+
+from users.serializers import UserSerializer, UserRegistrationSerializer, CurrentUserSerializer
 from users.models import User
 
 
@@ -57,3 +58,11 @@ class UserViewSet(viewsets.ModelViewSet):
             return self.request.user
 
         return super(UserViewSet, self).get_object()
+
+    def get_serializer_class(self):
+        slug = self.kwargs.get('slug')
+
+        if slug == "current" and self.request.user.is_authenticated:
+            return CurrentUserSerializer
+        else:
+            return self.serializer_class

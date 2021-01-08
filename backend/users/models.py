@@ -20,6 +20,7 @@ class User(AbstractUser):
     stream_key = models.UUIDField(default=uuid.uuid4)
 
     name_styling = models.CharField(max_length=255, blank=True, null=True)
+    chat_color = models.CharField(max_length=7, default="#121212")
     stream_title = models.CharField(max_length=255, blank=True, null=True)
     live_at = models.DateTimeField(blank=True, null=True)
     viewers = models.ManyToManyField(to='self', through='ViewerRecord', through_fields=('viewed_user', 'viewing_user'))
@@ -40,6 +41,10 @@ class User(AbstractUser):
     @property
     def viewer_count(self):
         return self.viewers.all().values('viewing_user__ip_address', 'username').distinct().count()
+
+    @property
+    def display_name(self):
+        return self.name_styling if self.name_styling else self.username
 
 
 class ViewerRecord(models.Model):

@@ -15,7 +15,17 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         lookup_field = 'slug'
-        fields = ['url', 'username', 'slug', 'stream_title', 'is_live', 'live_at', 'viewer_count']
+        fields = ['url', 'username', 'display_name', 'slug', 'chat_color', 'stream_title', 'is_live', 'live_at', 'viewer_count']
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
+
+        
+class CurrentUserSerializer(UserSerializer):
+    class Meta:
+        model = User
+        lookup_field = 'slug'
+        fields = ['url', 'username', 'display_name', 'slug', 'stream_key', 'chat_color', 'stream_title', 'is_live', 'live_at', 'viewer_count']
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }

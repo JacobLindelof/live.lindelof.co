@@ -21,6 +21,7 @@ django-rest-framework = "*"
 djangorestframework-camel-case = "*"
 django-cors-headers = "*"
 djangorestframework-jwt = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.7"
