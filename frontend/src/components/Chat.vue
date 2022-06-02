@@ -4,33 +4,6 @@
       <v-card-title class="justify-center">Stream Chat</v-card-title>
     </v-card>
     <v-layout justify-space-between column fill-height>
-      <v-dialog v-model="usernameDialog" max-width="400">
-        <v-card>
-          <v-form v-on:submit.prevent="setUsername">
-            <v-card-title class="headline">
-              Username Required
-            </v-card-title>
-            <v-card-text>
-              Please set a username to use the stream chat.
-              <v-text-field
-                required
-                v-model="usernameDialogUsername"
-                placeholder="Username"
-                hide-details
-              ></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="usernameDialog = false">
-                Cancel
-              </v-btn>
-              <v-btn color="darken-1" submit text @click="setUsername" :disabled="usernameDialogUsername == null || usernameDialogUsername == ''">
-                OK
-              </v-btn>
-            </v-card-actions>
-          </v-form>
-        </v-card>
-      </v-dialog>
       <v-layout justify-space-between column fill-height class="messageLayout">
         <div></div>
         <v-container justify-end ref="messageContainer" class="messageContainer pa-0">
@@ -42,7 +15,6 @@
             v-bind:class="{ alt: index % 2 === 1 }"
             :key="index"
             :message="message"
-            :usernameColor="currentUser.chatColor"
           />
         </v-container>
       </v-layout>
@@ -55,7 +27,6 @@
             v-model="chatMessage"
             placeholder="Send a message"
             hide-details
-            @click="checkUsername"
             :disabled="!isAuthenticated"
           ></v-text-field>
         </form>
@@ -75,6 +46,7 @@ export default {
     chatMessage: null,
     messages: [],
     currentChatChannel: null,
+    chatSocket: null,
     usernameColor: `hsla(${~~(360 * Math.random())},70%,70%,0.8)`
   }),
   computed: {
@@ -82,7 +54,7 @@ export default {
       return this.$store.state.isAuthenticated;
     },
     currentChannel() {
-      return this.$store.state.currentChannelInfo;
+      return this.$store.state.currentChannel;
     },
     myUsername() {
       return this.$store.state.authUser.username;
@@ -93,71 +65,45 @@ export default {
   },
   methods: {
     reloadChat() {
-      if (this.currentChatChannel != this.currentChannel.username) {
-        if (this.currentChatChannel != null) {
-          this.$socket.emit("leave", {
-            room: this.currentChatChannel,
-          });
-        }
-        this.messages = [];
-        this.currentChatChannel = this.currentChannel.username;
-        this.$socket.emit("join", {
-          room: this.currentChatChannel,
-        });
+      this.messages = [];
+      
+      if (this.chatSocket){
+        this.chatSocket.close();
+        this.chatSocket = null;
+        this.chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+        );
       }
-    },
-    setUsername() {
-      if(this.usernameDialogUsername != null && this.usernameDialogUsername != "") {
-        this.myUsername = this.usernameDialogUsername;
-        if (this.chatMessage != null && this.chatMessage != "") {
-          this.$socket.emit("chatMessage", {
-            username: this.$store.state.myUsername,
-            message: this.chatMessage,
-            room: this.currentChatChannel,
-          });
-          this.chatMessage = null;
-        }
-        this.usernameDialog = false;
+      else {
+        this.chatSocket = new WebSocket(
+          'ws://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+        );
       }
-    },
-    checkUsername() {
-      if ((this.myUsername == null) | (this.myUsername == "")) {
-        this.usernameDialog = true;
-      }
+
+      this.chatSocket.onmessage = (e) => {
+        const message = JSON.parse(e.data);
+        this.messages.push(message);
+      };
     },
     sendMessage() {
-      if (this.chatMessage != null && this.chatMessage != "") {
-        if (this.myUsername != null && this.myUsername != "") {
-          this.$socket.emit("chatMessage", {
-            username: this.myUsername,
-            message: this.chatMessage,
-            usernameColor: this.usernameColor,
-            room: this.currentChatChannel,
-          });
-          this.chatMessage = null;
-        } else {
-          this.usernameDialog = true;
-        }
-      }
+      this.chatSocket.send(JSON.stringify({
+        username: this.myUsername,
+        message: this.chatMessage,
+        usernameColor: this.currentUser.chatColor,
+      }));
+      this.chatMessage = null;
     },
   },
   mounted() {
-    this.reloadChat();
+    if (this.currentChannel != null) {
+      this.reloadChat();
+    }
   },
   watch: {
     currentChannel() {
-      this.reloadChat();
-    },
-  },
-  sockets: {
-    connect() {},
-    newChatMessage(message) {
-      if (message.room === this.currentChatChannel) {
-        this.messages.push(message);
+      if (this.currentChannel != null) {
+        this.reloadChat();
       }
-      this.$nextTick(function() {
-        this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
-      });
     },
   },
 };

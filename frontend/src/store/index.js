@@ -58,7 +58,9 @@ export default new Vuex.Store({
       state.myUsername = payload
     },
     setCurrentChannel(state, payload) {
-      state.currentChannel = payload
+      if (state.currentChannel !== payload) {
+        state.currentChannel = payload
+      }
     }
   },
   actions: {
