@@ -136,6 +136,12 @@ LOGGING = {
             "handlers": ["console", "mail_admins"],
             "propagate": True,
         },
+        'daphne': {
+            'handlers': [
+                'console',
+            ],
+            'level': 'DEBUG'
+        },
     },
 }
 
