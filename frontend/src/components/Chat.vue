@@ -71,12 +71,12 @@ export default {
         this.chatSocket.close();
         this.chatSocket = null;
         this.chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+            'wss://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
         );
       }
       else {
         this.chatSocket = new WebSocket(
-          'ws://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+          'wss://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
         );
       }
 
