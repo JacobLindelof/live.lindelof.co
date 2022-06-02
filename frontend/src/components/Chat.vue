@@ -66,17 +66,21 @@ export default {
   methods: {
     reloadChat() {
       this.messages = [];
-      
+      let wsProtocol = null;
+      if (window.location.protocol == 'https:') {
+        wsProtocol = 'wss://'
+      } else {wsProtocol = 'ws://'}
+
       if (this.chatSocket){
         this.chatSocket.close();
         this.chatSocket = null;
         this.chatSocket = new WebSocket(
-            'wss://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+            wsProtocol  + window.location.host + '/ws/chat/' + this.currentChannel + '/'
         );
       }
       else {
         this.chatSocket = new WebSocket(
-          'wss://' + window.location.host + '/ws/chat/' + this.currentChannel + '/'
+          wsProtocol  + window.location.host + '/ws/chat/' + this.currentChannel + '/'
         );
       }
 

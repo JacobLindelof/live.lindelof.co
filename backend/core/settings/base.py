@@ -229,7 +229,7 @@ JWT_AUTH = {
 }
 
 # Channels
-ASGI_APPLICATION = "core.asgi.application"
+ASGI_APPLICATION = "core.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

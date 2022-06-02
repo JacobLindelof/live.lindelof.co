@@ -22,6 +22,8 @@ djangorestframework-camel-case = "*"
 django-cors-headers = "*"
 djangorestframework-jwt = "*"
 django-allauth = "*"
+channels = "*"
+channels-redis = "*"
 
 [requires]
 python_version = "3.7"
