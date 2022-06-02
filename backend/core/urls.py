@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/auth/register/', user_views.register_user),    
     path('api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include(router.urls)),
+    path('chat/', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
