@@ -82,4 +82,4 @@
   !*** ./src/utils/logger.js ***!
   \*****************************/
 /*! exports provided: enableLogs, logger */function(e,t,r){"use strict";r.r(t),r.d(t,"enableLogs",(function(){return c})),r.d(t,"logger",(function(){return h}));var i=r(/*! ./get-self-scope */"./src/utils/get-self-scope.js");function a(){}var n={trace:a,debug:a,log:a,warn:a,info:a,error:a},s=n;function o(e,t){return t="["+e+"] > "+t,t}var l=Object(i["getSelfScope"])();function u(e){var t=l.console[e];return t?function(){for(var r=arguments.length,i=new Array(r),a=0;a<r;a++)i[a]=arguments[a];i[0]&&(i[0]=o(e,i[0])),t.apply(l.console,i)}:a}function d(e){for(var t=arguments.length,r=new Array(t>1?t-1:0),i=1;i<t;i++)r[i-1]=arguments[i];r.forEach((function(t){s[t]=e[t]?e[t].bind(e):u(t)}))}var c=function(e){if(l.console&&!0===e||"object"===typeof e){d(e,"debug","log","info","warn","error");try{s.log()}catch(t){s=n}}else s=n},h=s}})["default"]}))}}]);
-//# sourceMappingURL=about.54273942.js.map
+//# sourceMappingURL=about.09587dbd.js.map

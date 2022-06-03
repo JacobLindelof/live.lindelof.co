@@ -101,12 +101,12 @@ export default {
         {
           username: this.userDetails.username,
           message: "This is a test chat message.",
-          usernameColor: this.currentChatColor,
+          usernameColor: this.chatColor,
         },
         {
           username: this.userDetails.username,
           message: "With fancy username colors.",
-          usernameColor: this.currentChatColor,
+          usernameColor: this.chatColor,
         }
       ]
     },
