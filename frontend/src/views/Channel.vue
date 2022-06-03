@@ -1,5 +1,5 @@
 <template>
-  <div v-if="channelInfo.username">
+  <div v-if="channelInfo && channelInfo.username">
     <div class="playerContainer">
       <div class="videoContainer">
         <Player v-if="!isMobileSafari" :channelName="username"/>
@@ -69,18 +69,31 @@ export default {
     },
     ...mapActions(["getCurrentChannelInfo"]),
   },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
   mounted() {
+    clearInterval(this.timer);
     this.getCurrentChannelInfo(this.username)
-    this.timer = setInterval(() => {this.getCurrentChannelInfo(this.username)}, 5000);
+    this.timer = setInterval(() => {
+      this.getCurrentChannelInfo(this.username)
+    }, 5000);
   },
   watch: {
     username() {
+      clearInterval(this.timer);
       this.getCurrentChannelInfo(this.username);
+      this.timer = setInterval(() => {
+        this.getCurrentChannelInfo(this.username)
+      }, 5000);
     },
   },
   computed: {
     channelInfo() {
       return this.$store.state.currentChannelInfo;
+    },
+    currentChannel() {
+      return this.$store.state.currentChannel;
     },
     isMobileSafari() {
       var userAgent = window.navigator.userAgent;

@@ -88,18 +88,6 @@ export default {
       currentChatColor: "",
       chatColorTimeout: "",
       streamKeyFieldType: "password",
-      testMessages: [
-        {
-          username: "Unholypanda",
-          message: "This is a test chat message.",
-          usernameColor: "hsla(171,70%,70%,0.8)",
-        },
-        {
-          username: "Unholypanda",
-          message: "With fancy username colors.",
-          usernameColor: "hsla(171,70%,70%,0.8)",
-        },
-      ],
     };
   },
   watch: {
@@ -108,6 +96,20 @@ export default {
     },
   },
   computed: {
+    testMessages() {
+      return [
+        {
+          username: this.userDetails.username,
+          message: "This is a test chat message.",
+          usernameColor: this.currentChatColor,
+        },
+        {
+          username: this.userDetails.username,
+          message: "With fancy username colors.",
+          usernameColor: this.currentChatColor,
+        }
+      ]
+    },
     userDetails() {
       return this.$store.state.authUser;
     },
@@ -122,8 +124,11 @@ export default {
       },
     },
   },
+  created() {
+    this.closeChannel();
+  },
   methods: {
-    ...mapActions(["setChatColor"]),
+    ...mapActions(["setChatColor", "closeChannel"]),
     setCurrentChatColor() {
       clearTimeout(this.chatColorTimeout);
 

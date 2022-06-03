@@ -80,7 +80,7 @@ export default {
 
   watch: {
     currentChannel() {
-      if (this.currentChannelInfo.username) {
+      if (this.currentChannelInfo && this.currentChannelInfo.username) {
         this.showChat = true;
       } else {
         this.showChat = false;

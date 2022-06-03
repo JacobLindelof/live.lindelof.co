@@ -4,10 +4,15 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapActions } from "vuex";
+
 export default {
   name: 'Home',
+  methods: {
+    ...mapActions(['closeChannel']),
+  },
   mounted() {
+    this.closeChannel();
     this.$store.commit('setCurrentChannel', null)
   }
 }

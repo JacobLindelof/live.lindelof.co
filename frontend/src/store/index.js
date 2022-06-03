@@ -52,7 +52,11 @@ export default new Vuex.Store({
       state.channels = payload.channels.results
     },
     updateCurrentChannelInfo (state, payload) {
-      state.currentChannelInfo = payload.channelInfo
+      if (!payload) {
+        state.currentChannelInfo = {"username":null,"stream_title":null}
+      } else {
+        state.currentChannelInfo = payload.channelInfo
+      }
     },
     setUsername(state, payload) {
       state.myUsername = payload
@@ -61,6 +65,10 @@ export default new Vuex.Store({
       if (state.currentChannel !== payload) {
         state.currentChannel = payload
       }
+    },
+    closeChannel(state) {
+      state.currentChannel = null
+      state.currentChannelInfo = null
     }
   },
   actions: {
@@ -116,7 +124,11 @@ export default new Vuex.Store({
       commit('updateCurrentChannelInfo', {
         channelInfo: channelInfo
       })
-      commit('setCurrentChannel', channelInfo.username)
+      if (channelInfo) {
+        commit('setCurrentChannel', channelInfo.username)
+      } else {
+        commit('setCurrentChannel', null)
+      }
     },
     async setChatColor ({ commit }, payload) {
       commit('updateChatColor', {
@@ -131,6 +143,9 @@ export default new Vuex.Store({
         channelInfo: data
       })
       commit('setCurrentChannel', username)
+    },
+    async closeChannel ({ commit }) {
+      commit('closeChannel')
     }
   },
   modules: {
