@@ -41,7 +41,15 @@ export default {
   methods: {
     loadStream() {
       if (Hls.isSupported()) {
-        const hls = new Hls();
+        const hls = new Hls({
+          "enableWorker": true,
+          "maxBufferLength": 1,
+          "liveBackBufferLength": 0,
+          "liveSyncDuration": 0,
+          "liveMaxLatencyDuration": 5,
+          "liveDurationInfinity": true,
+          "highBufferWatchdogPeriod": 1,
+        });
         hls.loadSource(this.channelUrl);
         hls.attachMedia(this.player.media);
       }
