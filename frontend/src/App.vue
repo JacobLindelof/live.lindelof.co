@@ -2,14 +2,7 @@
   <v-app id="inspire">
     <v-app-bar app clipped-right clipped-left>
       <v-btn text to="/" :ripple="false" class="px-0">
-        <v-img
-          class="mr-2"
-          :src="require('./assets/taystone.png')"
-          max-height="40"
-          max-width="40"
-          contain
-        ></v-img>
-        TayStone.TV
+        Live
       </v-btn>
       <v-spacer />
       <LoginButton v-if="isAuthenticated === false"/>
